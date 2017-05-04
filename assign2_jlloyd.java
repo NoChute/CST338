@@ -3,7 +3,7 @@
  * Program: Assignment2 - Casino
  * Author: Jason Lloyd
  * Class: CST 338
- * Date: 5/3/2017
+ * Date: 5/4/2017
 */
 
 import java.util.*;
@@ -17,8 +17,6 @@ public class Assig2
    {
 	  int theBet = 0;
 	  int multiplier = 0;
-	  int totalWinnings = 0;
-	  int winnings = 0;
 	  
 	  do
 	  {
@@ -30,32 +28,33 @@ public class Assig2
 	        //a bet of 0 will skip this stanza
 	        
 	        //mySpin will now contain the results of the pull
-		TripleString mySpin = pull();
-		//Find out if mySpin contains a winning combo, return 0 if not
-		multiplier = getPayMultiplier(mySpin);
-		//Calculate the player's willing for this pull()
-		winnings = theBet * multiplier;
-		TripleString.saveWinnings(winnings);
-		//Show the player what they won
-		display(mySpin, winnings);
-		//Add to the grand total
-		totalWinnings += winnings;
-		
-		//Increment numPulls for the next wager and pull()
-		TripleString.numPulls = TripleString.numPulls + 1;
+		    TripleString mySpin = pull();
+		    //Find out if mySpin contains a winning combo, return 0 if not
+		    multiplier = getPayMultiplier(mySpin);
+		    //Save the product of theBet and muliplier as the winnings
+		    if (TripleString.saveWinnings(theBet * multiplier))
+		    {
+		       //Show the player what they won
+		       display(mySpin, theBet * multiplier);
+		    }
+		    else
+		    {
+		       //We've run out of space in TripleString 
+		       //Or something has gone wrong
+		       //Lets get out of here
+		       break;
+		    }
 	     }
 	  } 
-	  //Continue playing until the wager is 0 or we reach MAX_PULLS
-	  while(theBet != 0 && TripleString.numPulls < TripleString.MAX_PULLS);      
+	  //Continue playing until the wager is 0
+	  while(theBet != 0);      
 
 	  keyboard.close();
 	  
 	  //Display the end result to the player
 	  System.out.println("Thanks for playing at the Casino!");
-	  System.out.println("Your individual winnings were:");
+	  System.out.println("Your individual winnings were:\n");
 	  System.out.println(TripleString.displayWinnings());
-	  System.out.println("Your total winnings were: $" +
-	        totalWinnings);
    }
 
    public static int getBet()
@@ -266,32 +265,44 @@ class TripleString
 
    public static boolean saveWinnings(int winnings) 
    {
-      if (winnings >= 0) 
+      boolean returnValue = false;
+      if (numPulls < MAX_PULLS && winnings >= 0) 
       {
          pullWinnings[numPulls] = winnings;
-         return true;
+         returnValue = true;
+         //Increment the number of pulls for the next time
+         numPulls += 1;
       } 
       else 
       {
-         return false;
+         returnValue = false;
       }
+      
+      
+      return returnValue;
    }
 
    public static String displayWinnings() 
    {
       String returnString = "";
+      int totalWinnings = 0;
 
       for (int i = 0; i < numPulls; i++) 
       {
+         totalWinnings += pullWinnings[i];
          returnString += pullWinnings[i];
          returnString += " ";
       }
+      returnString += "\n";
+      returnString += "Your total winnings were $";
+      returnString += totalWinnings;
+      
       return returnString;
    }
 
    private boolean validString(String str) 
    {
-      if (str.length() > 0 && str.length() <= MAX_LEN) 
+      if (str.isEmpty() == true && str.length() <= MAX_LEN) 
       {
          return true;
       } 
