@@ -3,7 +3,7 @@
  * Program: Assignment2 - Casino
  * Author: Jason Lloyd
  * Class: CST 338
- * Date: 5/3/2017
+ * Date: 5/4/2017
 */
 
 import java.util.*;
@@ -15,47 +15,46 @@ public class Assig2
    
    public static void main(String []args) 
    {
-	  int theBet = 0;
-	  int multiplier = 0;
-	  int totalWinnings = 0;
-	  int winnings = 0;
+      int theBet = 0;
+      int multiplier = 0;
 	  
-	  do
-	  {
-	     //Start the game. getBet() get a int from 0 - 100
-	     theBet = getBet();
-	     if (theBet != 0)
-	     {
-	        //Player is making a wager
-	        //a bet of 0 will skip this stanza
-	        
-	        //mySpin will now contain the results of the pull
-		TripleString mySpin = pull();
-		//Find out if mySpin contains a winning combo, return 0 if not
-		multiplier = getPayMultiplier(mySpin);
-		//Calculate the player's willing for this pull()
-		winnings = theBet * multiplier;
-		TripleString.saveWinnings(winnings);
-		//Show the player what they won
-		display(mySpin, winnings);
-		//Add to the grand total
-		totalWinnings += winnings;
-		
-		//Increment numPulls for the next wager and pull()
-		TripleString.numPulls = TripleString.numPulls + 1;
-	     }
-	  } 
-	  //Continue playing until the wager is 0 or we reach MAX_PULLS
-	  while(theBet != 0 && TripleString.numPulls < TripleString.MAX_PULLS);      
+      do
+      {
+         //Start the game. getBet() get a int from 0 - 100
+	 theBet = getBet();
+	 if (theBet != 0)
+	 {
+	    //Player is making a wager
+	    //a bet of 0 will skip this stanza        
+	    //mySpin will now contain the results of the pull
+	    TripleString mySpin = pull();
+	    //Find out if mySpin contains a winning combo, return 0 if not
+	    multiplier = getPayMultiplier(mySpin);
+	    //Save the product of theBet and muliplier as the winnings
+	    if (TripleString.saveWinnings(theBet * multiplier))
+	    {
+	       //Show the player what they won
+	       display(mySpin, (theBet * multiplier));
+	    }
+	    else
+	    {
+	       //We've run out of space in TripleString 
+	       //Or something has gone wrong
+	       //Lets get out of here
+	       System.out.println("No more bets are allowed. Sorry!");
+	       break;
+	    }
+	 }
+      } 
+	//Continue playing until the wager is 0
+      while(theBet != 0);      
 
-	  keyboard.close();
+      keyboard.close();
 	  
-	  //Display the end result to the player
-	  System.out.println("Thanks for playing at the Casino!");
-	  System.out.println("Your individual winnings were:");
-	  System.out.println(TripleString.displayWinnings());
-	  System.out.println("Your total winnings were: $" +
-	        totalWinnings);
+      //Display the end result to the player
+      System.out.println("Thanks for playing at the Casino!");
+      System.out.println("Your individual winnings were:\n");
+      System.out.println(TripleString.displayWinnings());
    }
 
    public static int getBet()
@@ -88,17 +87,17 @@ public class Assig2
    // The 3 string values are added to a new TripleString object
    // The new TripleString object is returned
    {
-      TripleString returnValue = new TripleString();
+      TripleString tString = new TripleString();
       
       String string1 = randString();
       String string2 = randString();
-      String string3 = randString();
+      String string3 = randString();  
       
-      returnValue.setString1(string1);
-      returnValue.setString2(string2);
-      returnValue.setString3(string3);
+      tString.setString1(string1);
+      tString.setString2(string2);
+      tString.setString3(string3);
       
-      return returnValue;        
+      return tString;        
    }
    
    public static void display(TripleString thePull, int winnings)
@@ -204,6 +203,7 @@ class TripleString
       string3 = "";
    }
 
+   //Multilators 
    public boolean setString1(String str) 
    {
       if (validString(str)) 
@@ -243,6 +243,7 @@ class TripleString
       }
    }
 
+   //Accessors 
    public String getString1() 
    {
       return string1;
@@ -266,32 +267,44 @@ class TripleString
 
    public static boolean saveWinnings(int winnings) 
    {
-      if (winnings >= 0) 
+      boolean returnValue = false;
+      if (numPulls < MAX_PULLS && winnings >= 0) 
       {
          pullWinnings[numPulls] = winnings;
-         return true;
+         returnValue = true;
+         //Increment the number of pulls for the next time
+         numPulls += 1;
       } 
       else 
       {
-         return false;
+         returnValue = false;
       }
+      
+      
+      return returnValue;
    }
 
    public static String displayWinnings() 
    {
       String returnString = "";
+      int totalWinnings = 0;
 
       for (int i = 0; i < numPulls; i++) 
       {
+         totalWinnings += pullWinnings[i];
          returnString += pullWinnings[i];
          returnString += " ";
       }
+      returnString += "\n";
+      returnString += "Your total winnings were $";
+      returnString += totalWinnings;
+      
       return returnString;
    }
 
    private boolean validString(String str) 
    {
-      if (str.length() > 0 && str.length() <= MAX_LEN) 
+      if (str.isEmpty() == false && str.length() <= MAX_LEN) 
       {
          return true;
       } 
