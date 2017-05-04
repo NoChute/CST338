@@ -42,6 +42,7 @@ public class Assig2
 		       //We've run out of space in TripleString 
 		       //Or something has gone wrong
 		       //Lets get out of here
+		       System.out.println("No more bets are allowed. Sorry!");
 		       break;
 		    }
 	     }
