@@ -14,7 +14,6 @@ public class Assig2 {
          bet = getBet();
          pullString = pull();
          winning = bet * getPayMultiplier(pullString);
-         pullString.displayWinnings();   //Display any winnings at game's end.
          if (bet != 0 && pullString.saveWinnings(winning))
             display(pullString, winning);
          else        //User chose exit or MAX_PULLS was reached, so
