@@ -1,7 +1,7 @@
 
 /*
  * Program: Assignment2 - Casino
- * Author: Jason Lloyd
+ * Author: Jason Lloyd, Kevin Hendershott, Oscar Alba, Jennifer Engblom
  * Class: CST 338
  * Date: 5/4/2017
 */
