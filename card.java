@@ -33,12 +33,16 @@ class Card
       {
          case SPADES:
             theSuit = "spades";
+            break;
          case DIAMONDS:
             theSuit = "diamonds";
+            break;
          case HEARTS:
             theSuit = "hearts";
+            break;
          case CLUBS:
             theSuit = "clubs";
+            break;
       }
       return theSuit;
    }
