@@ -1,5 +1,6 @@
-class Card
+public static class Card
 {
+   //Created by Jason Lloyd
    public static enum Suit { DIAMONDS, HEARTS, SPADES, CLUBS };
    
    private char value;
@@ -25,26 +26,9 @@ class Card
       return value;
    }
    
-   public String getSuit()
+   public Suit getSuit()
    {
-      String theSuit = "";
-      
-      switch (suit)
-      {
-         case SPADES:
-            theSuit = "spades";
-            break;
-         case DIAMONDS:
-            theSuit = "diamonds";
-            break;
-         case HEARTS:
-            theSuit = "hearts";
-            break;
-         case CLUBS:
-            theSuit = "clubs";
-            break;
-      }
-      return theSuit;
+      return this.suit;
    }
    
    public boolean getErrorFlag()
@@ -74,6 +58,7 @@ class Card
    }
   
    public String toString()
+   // toString outputs the value and suit of the card as a string
    {
       String output = "";
       
@@ -83,7 +68,22 @@ class Card
       } 
       else
       {
-         output = getValue() + " of " + getSuit();
+         output = getValue() + " of ";
+		 switch (suit)
+         {
+         case SPADES:
+            output += "spades";
+            break;
+         case DIAMONDS:
+            output += "diamonds";
+            break;
+         case HEARTS:
+            output += "hearts";
+            break;
+         case CLUBS:
+            output += "clubs";
+            break;
+		 }
       }
       return output;
    }
