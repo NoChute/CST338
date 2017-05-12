@@ -45,7 +45,7 @@ public class Ass3 {
       public Card dealCard() {
          Card card = cards[0];
          ArrayList<Card> cardsList = new ArrayList<>(Arrays.asList(card));
-         int newCard = cardsList.get(0);
+         Card newCard = cardsList.get(0);
          cardsList.remove(0);
          
       }
