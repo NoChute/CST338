@@ -23,7 +23,7 @@ public static class Card
    //Accessors
    public char getValue()
    {
-      return value;
+      return this.value;
    }
    
    public Suit getSuit()
@@ -71,18 +71,18 @@ public static class Card
          output = getValue() + " of ";
 		 switch (suit)
          {
-         case SPADES:
-            output += "spades";
-            break;
-         case DIAMONDS:
-            output += "diamonds";
-            break;
-         case HEARTS:
-            output += "hearts";
-            break;
-         case CLUBS:
-            output += "clubs";
-            break;
+            case SPADES:
+               output += "spades";
+               break;
+            case DIAMONDS:
+               output += "diamonds";
+               break;
+            case HEARTS:
+               output += "hearts";
+               break;
+            case CLUBS:
+               output += "clubs";
+               break;
 		 }
       }
       return output;
