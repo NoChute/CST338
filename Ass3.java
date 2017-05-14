@@ -160,7 +160,7 @@ public class Ass3 {
       
       private char value; // the value of the card
       private Suit suit; // the suit of the card
-      private boolean errorFlag;
+      private boolean errorFlag = false; //set to false in case toString is called before set
       
       //Constructors
       public Card() {
