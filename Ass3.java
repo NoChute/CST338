@@ -1,16 +1,4 @@
 
-/****************************
-* Kevin Hendershott
-* Jason Lloyd
-* Oscar Alba
-* Jenn Engblom
-* 
-* 11MAY2017
-* 
-* CST338
-* 
-****************************/
-
 import java.util.*;
 
 
@@ -24,6 +12,11 @@ public class Ass3 {
       Deck pile = new Deck();
       pile.Deck(i);
       
+      for (int j = 0; j < 3; j++) {
+         //Deck cardTemp = new Deck();
+         System.out.println(pile.dealCard());
+      }
+      
       
    }
    
@@ -36,11 +29,12 @@ public class Ass3 {
       private int topCard;
       private int numPacks;
       
+      private int used = 0; //cards used up til now
       private static boolean initializeMP = false;
       
       //empty constructor
       public void Deck () {
-         this.numPacks = 1;
+         numPacks = 1;
          cards = new Card[numPacks * 52];
          
          allocateMasterPack();
@@ -48,6 +42,8 @@ public class Ass3 {
          for (topCard = 0; topCard < cards.length; topCard++) {
             cards[topCard].set(masterPack[topCard].getValue(), masterPack[topCard].getSuit());
          }
+         
+         shuffle();
       }
       
 
@@ -63,6 +59,11 @@ public class Ass3 {
          else{
             init(numPacks);
          }
+         //System.out.println(Arrays.toString(cards)); //This is for testing purposes
+         //System.out.println(cards.length); // Also for testing purposes
+         shuffle();
+         //System.out.println(Arrays.toString(cards)); //This is for testing purposes
+         //System.out.println(cards.length); // Also for testing purposes
       }
       
       
@@ -78,8 +79,9 @@ public class Ass3 {
                topCard++;
             }
          }
-         System.out.println(Arrays.toString(cards));
-         System.out.println(cards.length);
+         //System.out.println(Arrays.toString(cards)); //This is for testing purposes
+         //System.out.println(cards.length); // Also for testing purposes
+         
       }
       
       //mixes up the cards with standard random number generator
@@ -101,7 +103,7 @@ public class Ass3 {
       //returns and removes the card in the top occupied position of cards[]
       //top card means at index 0, not the last index in array
       public Card dealCard() {
-         int used = 0; //cards used up til now
+         //int used = 0; //cards used up til now
          used++;
          return cards[used - 1];
          
