@@ -267,21 +267,18 @@ public class Ass3 {
       private int numCards;
       
       
-      public Hand()
-      {
+      public Hand() {
          myCards = new ArrayList<Card>();
          numCards = 0;
          
       }
      
-      public void resetHand()
-      {
+      public void resetHand() {
          myCards = new ArrayList<Card>();
          numCards = 0;
       }
       
-      public boolean takeCard(Card card)
-      {
+      public boolean takeCard(Card card) {
          boolean validCheck;
          
          if (numCards >= MAX_CARDS) {
@@ -307,12 +304,10 @@ public class Ass3 {
       
       public String toString() {
          String string = "Hand = ( ";
-         if (numCards == 0)
-         {
+         if (numCards == 0) {
             string = ")";
          }
-         else
-         {
+         else {
            string  = "(" + myCards + ")";
          }
          return string;
