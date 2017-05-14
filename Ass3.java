@@ -184,14 +184,11 @@ public class Ass3 {
       
       private char value; // the value of the card
       private Suit suit; // the suit of the card
-      private boolean errorFlag = false; //set to false in case toString is called before set
+      private boolean errorFlag;
       
       //Constructors
       public Card() {
-         //this.value = 'A';
-         //this.suit = Suit.SPADES; 
-         //this.errorFlag = false;
-         set('A', Suit.valueOf("SPADES"));
+         set('A', Suit.SPADES);
       }
       
       public Card(char value, Suit suit) {
@@ -213,27 +210,24 @@ public class Ass3 {
       
       //Mutators
       public boolean set(char value, Suit suit) {
-         //boolean output = false;
-         
+
          // Test to see if the values passed are valid
          if (isValid(value, suit)) {     
             // Values are OK, now set both values
             this.suit = suit;
             this.value = value;
-            this.errorFlag = false;
-            //output = true;    
+            this.errorFlag = false;   
          }
          else {
             this.errorFlag = true;
          }
-         return errorFlag;
-         //return output;
+         return !this.errorFlag;
       }
      
       public String toString() {
          String output = "";
          
-         if (errorFlag) {
+         if (errorFlag == true) {
             output = "[invalid]";
          } 
          else {
@@ -266,8 +260,7 @@ public class Ass3 {
          
          return isEquals;
       }
-      
-      
+     
       // Test value and suit to make sure they have valid entries.
       private boolean isValid(char value, Suit suit) {
          boolean output = false;
