@@ -88,9 +88,9 @@ public class Ass3 {
          //I took the top of the deck to be the 0th position, not the last position
          ArrayList<Card> cardsList = new ArrayList<>(Arrays.asList(cards));
          //the random number's range is reduced by 1 each time a card has been shuffled
-         for (int i = 0; i <= cards.length; i++) {
+         for (int i = 0; i < cards.length; i++) {
             Random rand = new Random();
-            int nextCard = rand.nextInt(cardsList.size() - i);
+            int nextCard = rand.nextInt(cardsList.size());
             cards[i] = cardsList.get(nextCard);
             cardsList.remove(nextCard);
          }
