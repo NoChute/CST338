@@ -1,3 +1,14 @@
+/****************************
+* Kevin Hendershott
+* Jason Lloyd
+* Oscar Alba
+* Jenn Engblom
+* 
+* 11MAY2017
+* 
+* CST338
+* 
+****************************/
 
 import java.util.*;
 
