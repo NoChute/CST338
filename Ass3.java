@@ -248,8 +248,8 @@ public class Ass3 {
       private boolean isValid(char value, Suit suit) {
          boolean output = false;
          
-         if (suit == Suit.CLUBS || suit == Suit.DIAMONDS || 
-               suit == Suit.HEARTS || suit == Suit.SPADES) {
+         if (suit == Suit.CLUBS  || suit == Suit.DIAMONDS || 
+             suit == Suit.HEARTS || suit == Suit.SPADES) {
             if (value == 'A' || value == '2' || value == '3' || value == '4' ||
                 value == '5' || value == '6' || value == '7' || value == '8' ||
                 value == '9' || value == 'T' || value == 'J' || value == 'Q' ||
