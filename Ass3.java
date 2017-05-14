@@ -152,8 +152,7 @@ public class Ass3 {
    
    
    
-   static class Card
-   {
+   static class Card {
       //Created by Jason Lloyd.
       public static enum Suit { DIAMONDS, HEARTS, SPADES, CLUBS };
       
@@ -162,68 +161,57 @@ public class Ass3 {
       private boolean errorFlag;
       
       //Constructors
-      public Card() 
-      {
-         this.value = 'A';
-         this.suit = Suit.SPADES; 
-         this.errorFlag = false;
+      public Card() {
+         //this.value = 'A';
+         //this.suit = Suit.SPADES; 
+         //this.errorFlag = false;
+         set('A', Suit.valueOf("SPADES"));
       }
       
-      public Card(char value, Suit suit)
-      {
+      public Card(char value, Suit suit) {
          this.set(value, suit);
       }
       
       //Accessors
-      public char getValue()
-      {
+      public char getValue() {
          return this.value;
       }
       
-      public Suit getSuit()
-      {
+      public Suit getSuit() {
          return this.suit;
       }
       
-      public boolean getErrorFlag()
-      {
+      public boolean getErrorFlag() {
          return this.errorFlag;
       }
       
       //Mutators
-      public boolean set(char value, Suit suit)
-      {
+      public boolean set(char value, Suit suit) {
          boolean output = false;
          
          // Test to see if the values passed are valid
-         if (isValid(value, suit))
-         {     
+         if (isValid(value, suit)) {     
             // Values are OK, now set both values
             this.suit = suit;
             this.value = value;
             this.errorFlag = false;
             output = true;    
          }
-         else
-         {
+         else {
             this.errorFlag = true;
          }
          return output;
       }
      
-      public String toString()
-      {
+      public String toString() {
          String output = "";
          
-         if (errorFlag == true)
-         {
+         if (errorFlag == true) {
             output = "[invalid]";
          } 
-         else
-         {
+         else {
             output = getValue() + " of ";
-            switch (suit)
-            {
+            switch (suit) {
                case SPADES:
                    output += "spades";
                    break;
@@ -241,32 +229,28 @@ public class Ass3 {
          return output;
       }
       
-      public boolean equals(Card card2)
-      // Test to see if "card2" value and suit matches the current object
-      {
+   // Test to see if "card2" value and suit matches the current object
+      public boolean equals(Card card2) {
          boolean isEquals = false;
          
-         if ( (this.value == card2.getValue()) && (this.suit == card2.suit) )
-         {
+         if ((this.value == card2.getValue()) && (this.suit == card2.suit)) {
             isEquals = true;
          }
          
          return isEquals;
       }
       
-      private boolean isValid(char value, Suit suit)
+      
       // Test value and suit to make sure they have valid entries.
-      {
+      private boolean isValid(char value, Suit suit) {
          boolean output = false;
          
          if (suit == Suit.CLUBS || suit == Suit.DIAMONDS || 
-               suit == Suit.HEARTS || suit == Suit.SPADES)
-         {
+               suit == Suit.HEARTS || suit == Suit.SPADES) {
             if (value == 'A' || value == '2' || value == '3' || value == '4' ||
-               value == '5' || value == '6' || value =='7' || value == '8' ||
-                  value == '9' || value == 'T' || value == 'J' || value == 'Q' ||
-                     value == 'K')
-            {
+                value == '5' || value == '6' || value == '7' || value == '8' ||
+                value == '9' || value == 'T' || value == 'J' || value == 'Q' ||
+                value == 'K') {
                output = true;
             }
          }
@@ -275,8 +259,7 @@ public class Ass3 {
    }
    
 
-   public class Hand
-   {
+   public class Hand {
       //Created by Oscar Alba.
       public static final int MAX_CARDS = 50;
       
@@ -301,12 +284,10 @@ public class Ass3 {
       {
          boolean validCheck;
          
-         if (numCards >= MAX_CARDS)
-         {
+         if (numCards >= MAX_CARDS) {
             validCheck = false;
          }
-         else
-         {
+         else {
             myCards.add(card);
             numCards++;
             validCheck = true;
@@ -315,8 +296,7 @@ public class Ass3 {
          return validCheck;
       }
       
-      public Card playCard()
-      {
+      public Card playCard() {
          Card card = myCards.get(myCards.size()-1);
          System.out.println("Playing " + card);
          myCards.remove(card);
@@ -325,8 +305,7 @@ public class Ass3 {
    
       }
       
-      public String toString()
-      {
+      public String toString() {
          String string = "Hand = ( ";
          if (numCards == 0)
          {
@@ -339,20 +318,16 @@ public class Ass3 {
          return string;
       }
    
-      public int getNumCards()
-      {
+      public int getNumCards() {
          return numCards;
       }
       
-      public Card inspectCard(int k)
-      {
+      public Card inspectCard(int k) {
          Card card;
-         if (k <= numCards)
-         {
+         if (k <= numCards) {
             card = new Card('B' , Card.Suit.SPADES);
          }
-         else
-         {
+         else {
             card =  myCards.get(myCards.size()-1);
          }
          return card;
