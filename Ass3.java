@@ -209,7 +209,7 @@ public class Ass3 {
       public String toString() {
          String output = "";
          
-         if (errorFlag == true) {
+         if (errorFlag) {
             output = "[invalid]";
          } 
          else {
