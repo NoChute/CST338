@@ -5,6 +5,19 @@ import java.util.*;
 public class Ass3 {
 
    public static void main(String[] args) {
+      //Created by Kevin Hendershott.
+      
+      //Notes to self:
+      //No Jokers.
+      //Not concerned WHICH card is played.
+      //Up to caller how many cards are dealt.
+      //Deck will always contains 52x cards.
+      //Client will set numPacks.
+      //Client will call dealCard().
+      //Client will shuffle.
+      //Client will restock deck with init() but don't reinstantiate.
+      
+      //Jenn's main:
       Scanner sc = new Scanner(System.in);
       System.out.println("Number of packs: ");
       int i = sc.nextInt();
