@@ -189,7 +189,7 @@ public class Ass3 {
       
       //Mutators
       public boolean set(char value, Suit suit) {
-         boolean output = false;
+         //boolean output = false;
          
          // Test to see if the values passed are valid
          if (isValid(value, suit)) {     
@@ -197,12 +197,13 @@ public class Ass3 {
             this.suit = suit;
             this.value = value;
             this.errorFlag = false;
-            output = true;    
+            //output = true;    
          }
          else {
             this.errorFlag = true;
          }
-         return output;
+         return errorFlag;
+         //return output;
       }
      
       public String toString() {
