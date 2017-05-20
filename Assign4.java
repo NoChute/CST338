@@ -38,18 +38,14 @@ class DataMatrix implements BarcodeIO {
    //Non-empty contructor 
    //Takes a BarcodeImage, cleans it up, and stores it in this.image
    public DataMatrix(BarcodeImage image) {
-      this.text = "";
-      this.actualHeight = 0;
-      this.actualWidth = 0;
+	  this();
       scan(image);
    }  
    
    //Non-empty contructor
    //Takes a String, and stores it in this.text
    public DataMatrix(String text) {
-      image = new BarcodeImage();
-      this.actualHeight = computeSignalHeight();
-      this.actualWidth = computeSignalWidth();
+      this();
       readText(text);
    }
    
@@ -123,8 +119,8 @@ class DataMatrix implements BarcodeIO {
    private void clearImage() {
       this.actualHeight = 0;
       this.actualWidth = 0;
-      for (int x = 0; x < BarcodeImage.MAX_WIDTH; x++) {
-         for (int y = 0; y < BarcodeImage.MAX_HEIGHT; y++) {
+      for (int x = 0; x < image.MAX_WIDTH; x++) {
+         for (int y = 0; y < image.MAX_HEIGHT; y++) {
             image.setPixel(x,y, false);
          }
       }
@@ -134,8 +130,8 @@ class DataMatrix implements BarcodeIO {
    // Output: the index of the first true "y" coordinate 
    private int findBottom() {
       int bottom = 0;
-      for (int x = 0; x < BarcodeImage.MAX_WIDTH; x++) {
-         for (int y = 0; y < BarcodeImage.MAX_HEIGHT; y++) {
+      for (int x = 0; x < image.MAX_WIDTH; x++) {
+         for (int y = 0; y < image.MAX_HEIGHT; y++) {
             if (image.getPixel(x,y)) {
                bottom = y;
                break;
@@ -149,7 +145,7 @@ class DataMatrix implements BarcodeIO {
    // the "y" coordinate is required from findBottom()
    private int findLeft(int y) {
       int left = 0;
-      for (int x = 0; x < BarcodeImage.MAX_WIDTH; x++) {
+      for (int x = 0; x < image.MAX_WIDTH; x++) {
          if (image.getPixel(x,y)) {
             left = x;
             break;
@@ -256,7 +252,6 @@ class DataMatrix implements BarcodeIO {
       }
       return true;
    }
-   
 
    public boolean scan(BarcodeImage image) {
       this.image = image.clone();
@@ -297,6 +292,7 @@ class DataMatrix implements BarcodeIO {
    
    private int computeSignalHeight() {
       int accumulator = 0;
+	  
       while (this.image.getPixel(0, accumulator)) {
          accumulator++;
       }
@@ -336,14 +332,16 @@ Function: BarcodeImage stores the 2D scan as a multidimensional array of boolean
    // Non empty constructor Takes a String array
    // and converts it into image_data[][]
    public BarcodeImage(String[] str_data) {
-      //The String[] Y axis is opposite of image_data
-      //So some creativity is needed
-      //topOfInput will be the index of the top row in image_data
-      int topOfInput = str_data.length - 1;
-      boolean pixelValue;
+      this();
       
       // Validate that the String[] can fie inside this.image
+	  // If not, remain empty.
       if (checkSize(str_data)) {
+		  //The String[] Y axis is opposite of image_data
+		  //So some creativity is needed
+		  //topOfInput will be the index of the top row in image_data
+		  int topOfInput = str_data.length - 1;
+		  boolean pixelValue;
          //Now loop through each String in str_data 
          // and copy into this.image_data.
          //The str_data[0] is at the "top" of the picture, 
@@ -359,7 +357,7 @@ Function: BarcodeImage stores the 2D scan as a multidimensional array of boolean
                setPixel( x, topOfInput - y, pixelValue );
             }
          }
-      }
+      } 
    }
    
    // Set the value of this.image_data[row][col] to value.
@@ -423,7 +421,8 @@ Function: BarcodeImage stores the 2D scan as a multidimensional array of boolean
          System.out.println();
       }
    }
-   // Implement the Clonable interface
+  
+  // Implement the Clonable interface
    public BarcodeImage clone() {
       BarcodeImage copy;
       try {
@@ -509,7 +508,6 @@ public class Assign4 {
       dm.generateImageFromText();
       dm.displayTextToConsole();
       dm.displayImageToConsole();
-
       
    }
 }
