@@ -38,7 +38,7 @@ class DataMatrix implements BarcodeIO {
    //Non-empty contructor 
    //Takes a BarcodeImage, cleans it up, and stores it in this.image
    public DataMatrix(BarcodeImage image) {
-	  this();
+      this();
       scan(image);
    }  
    
@@ -292,7 +292,7 @@ class DataMatrix implements BarcodeIO {
    
    private int computeSignalHeight() {
       int accumulator = 0;
-	  
+      
       while (this.image.getPixel(0, accumulator)) {
          accumulator++;
       }
@@ -335,13 +335,13 @@ Function: BarcodeImage stores the 2D scan as a multidimensional array of boolean
       this();
       
       // Validate that the String[] can fie inside this.image
-	  // If not, remain empty.
+      // If not, remain empty.
       if (checkSize(str_data)) {
-		  //The String[] Y axis is opposite of image_data
-		  //So some creativity is needed
-		  //topOfInput will be the index of the top row in image_data
-		  int topOfInput = str_data.length - 1;
-		  boolean pixelValue;
+          //The String[] Y axis is opposite of image_data
+          //So some creativity is needed
+          //topOfInput will be the index of the top row in image_data
+          int topOfInput = str_data.length - 1;
+          boolean pixelValue;
          //Now loop through each String in str_data 
          // and copy into this.image_data.
          //The str_data[0] is at the "top" of the picture, 
