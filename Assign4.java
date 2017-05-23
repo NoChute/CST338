@@ -317,11 +317,12 @@ Public Members:
 Function: BarcodeImage stores the 2D scan as a multidimensional array of booleans
 *********************/  
 
-   public static final int MAX_HEIGHT = 30;
-   public static final int MAX_WIDTH = 65;
+   public static final int MAX_HEIGHT = 30; // Max Y value ROWS
+   public static final int MAX_WIDTH = 65; // Max X value COLS
    
    // image_data[0][0] is the bottom left of the text image
-   private boolean[][] image_data = new boolean[MAX_WIDTH][MAX_HEIGHT];
+   // image_data[col][row]
+   private boolean[][] image_data = new boolean[MAX_WIDTH][MAX_HEIGHT]; 
 
    // Empty constructor. All cells are set to false
    public BarcodeImage() {
@@ -337,7 +338,7 @@ Function: BarcodeImage stores the 2D scan as a multidimensional array of boolean
    public BarcodeImage(String[] str_data) {
       this();
       
-      // Validate that the String[] can fie inside this.image
+      // Validate that the String[] can fit inside this.image
       // If not, remain empty.
       if (checkSize(str_data)) {
           //The String[] Y axis is opposite of image_data
@@ -363,16 +364,16 @@ Function: BarcodeImage stores the 2D scan as a multidimensional array of boolean
       } 
    }
    
-   // Set the value of this.image_data[row][col] to value.
+   // Set the value of this.image_data[col][row] to value.
    // If either row or col is out of range, return false.
    // Otherwise, set the pixel and return true.
-   public boolean setPixel(int row, int col, boolean value) {
+   public boolean setPixel(int col, int row, boolean value) {
       boolean returnValue;
    
-      if (row > MAX_WIDTH || col > MAX_HEIGHT) {
+      if (row > MAX_HEIGHT || col > MAX_WIDTH) {
          returnValue = false;
       } else {
-         this.image_data[row][col] = value;
+         this.image_data[col][row] = value;
          returnValue = true;
       }
       return returnValue;
@@ -381,13 +382,13 @@ Function: BarcodeImage stores the 2D scan as a multidimensional array of boolean
    // Retrieve the value located in this.image_data[row][col].
    // The spec allows for returning false if either row or col
    //  is out of bounds.
-   public boolean getPixel(int row, int col) {
+   public boolean getPixel(int col, int row) {
       boolean returnValue;
    
-      if (row > MAX_WIDTH || col > MAX_HEIGHT) {
+      if (row > MAX_HEIGHT || col > MAX_WIDTH) {
          returnValue = false;
       } else {
-         returnValue = this.image_data[row][col];
+         returnValue = this.image_data[col][row];
       }
       return returnValue;
    }
