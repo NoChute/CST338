@@ -509,10 +509,15 @@ public class Assign4 {
       dm.displayImageToConsole();
       
       // create your own message
-      dm.readText("What a great resume builder this is!");
+      dm.readText("I love team programming!");
       dm.generateImageFromText();
       dm.displayTextToConsole();
-      dm.displayImageToConsole();
+      dm.displayImageToConsole();     
+      // Making sure the image made translates
+      dm.translateImageToText();
+      dm.displayTextToConsole();
+      
+      
       System.out.println("*/");
       
    }
@@ -545,17 +550,18 @@ You did it!  Great work.  Celebrate.
 |****  *  * *  * **  ** *   ** *  * *  |
 |**************************************|
 ----------------------------------------
-What a great resume builder this is!
-----------------------------------------
-|* * * * * * * * * * * * * * * * * * * |
-|*                                    *|
-|***** * ***** ****** ******* **** **  |
-|* ************************************|
-|**  *    *  * * **    *    * *  *  *  |
-|* *               *    **     **  *  *|
-|**  *   * * *  * ***  * ***  *        |
-|**      **    * *    *     *    *  * *|
-|** *  * * **   *****  **  *    ** *** |
-|**************************************|
-----------------------------------------
+I love team programming!
+----------------------------
+|* * * * * * * * * * * * * |
+|*                        *|
+|** **** **** ***********  |
+|* ************************|
+|*    *  *    **  *        |
+|** **      *   *   ****  *|
+|*  **** ** *   **  ** **  |
+|*   **        ****    ** *|
+|**  * *  ***   ** **** ** |
+|**************************|
+----------------------------
+I love team programming!
 */
