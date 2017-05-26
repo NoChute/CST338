@@ -144,7 +144,7 @@ public class Card
          while(swap) {
             swap = false;
             for (int n = 0; n < arraySize - 1; n++) {
-               if (cardsToSort[n].compareTo(cardsToSort[n+1]) == 1) {
+               if (cardsToSort[n].compareTo(cardsToSort[n+1]) == -1) {
                   tempCard         = cardsToSort[n];
                   cardsToSort[n]   = cardsToSort[n+1];
                   cardsToSort[n+1] = tempCard;  
