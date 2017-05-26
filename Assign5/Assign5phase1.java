@@ -28,73 +28,20 @@ public class Assign5phase1 {
    static String turnIntIntoCardValue(int k) {
    // Returns a one character string based upon the int value passed
       String output = "";
-      switch (k){
-         case(0):
-            output = "X";
-            break;
-         case(1):
-            output = "A";
-            break;
-         case(2):
-            output = "2";
-            break;
-         case(3):
-            output = "3";
-            break;
-         case(4):
-            output = "4";
-            break;
-         case(5):
-            output = "5";
-            break;
-         case(6):
-            output = "6";
-            break;
-         case(7):
-            output = "7";
-            break;
-         case(8):
-            output = "8";
-            break;
-         case(9):
-            output = "9";
-            break;
-         case(10):
-            output = "T";
-            break;
-         case(11):
-            output = "J";
-            break;
-         case(12):
-            output = "Q";
-            break;
-         case(13):
-            output = "K";
-            break;
-         default:
-            // Do nothing                      
-      }
+      String[] values = { "X", "2", "3", "4", "5", "6", "7", 
+                          "8", "9", "T", "J", "Q", "K", "A"};
+      if (0 <= k && k < VALUES) {
+         output = values[k];
+      }                    
       return output;
    }
    
    static String turnIntIntoCardSuit(int j) {
    // Returns a one character String based upon the int passed
       String output = "";
-      switch (j){
-         case (0):  
-            output = "C";
-            break;
-         case (1):  
-            output = "H";
-            break;
-         case (2):
-            output = "D";
-            break;
-         case (3):
-            output = "S";
-            break;
-         default:
-            //do nothing
+      String[] suits = { "C", "H", "D", "S" };
+      if (0 <= j && j < SUITS) {
+         output = suits[j];
       }
       return output;   
    }
