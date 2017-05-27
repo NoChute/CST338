@@ -31,12 +31,11 @@ public class Hand {
       return validCheck;
    }
 
-   public Card playCard() {
+   public Card playCard(int cardIndex) {
       Card cardToPlay;
       
-      if (numCards > 0) {       
-         cardToPlay = myCards[numCards - 1];
-         //System.out.println("Playing " + cardToPlay);
+      if (this.numCards > 0 && cardIndex < this.numCards) {       
+         cardToPlay = myCards[cardIndex];
          numCards--;
       } else {
          cardToPlay = new Card('B', Card.Suit.SPADES);
@@ -59,10 +58,10 @@ public class Hand {
 
    public Card inspectCard(int k) {
       Card card;
-      if (k <= numCards) {
+      if (k > numCards) {
          card = new Card('B' , Card.Suit.SPADES);
       } else {
-         card =  myCards[numCards - 1];
+         card = myCards[k];
       }
       return card;
    } 
