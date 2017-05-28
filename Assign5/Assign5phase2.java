@@ -58,11 +58,12 @@ public class Assign5phase2 {
       }
       // and two random cards in the play region (simulating a computer/hum ply)
       
-      myCardTable.pnlPlayArea.add(playedCardLabels[0]);
-      myCardTable.pnlPlayArea.add(playedCardLabels[1]);
+      myCardTable.cmpPlayArea.add(playedCardLabels[0]);
+      myCardTable.hmnPlayArea.add(playedCardLabels[1]);
       
       myCardTable.pnlPlayArea.add(playLabelText[0]);
-      myCardTable.pnlPlayArea.add(playLabelText[1]);
+      myCardTable.pnlPlayArea.add(playLabelText[1]);   
+      
       
       // show everything to the user
       myCardTable.pack();

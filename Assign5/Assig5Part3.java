@@ -10,7 +10,7 @@ public class Assig5Part3 {
    static final int NUM_PLAYERS = 2;
    static final int NUM_CARDS_PER_HAND = 5;
    static final int COMPUTER = 0;
-   static final int PLAYER = 0;
+   static final int PLAYER = 1;
    
    private JLabel[] computerLabels   = new JLabel[NUM_CARDS_PER_HAND];
    private JButton[] humanLabels     = new JButton[NUM_CARDS_PER_HAND];  
@@ -27,7 +27,9 @@ public class Assig5Part3 {
             NUM_PLAYERS, NUM_CARDS_PER_HAND);     
    private CardTable myCardTable = new CardTable("CardTable", 
             NUM_CARDS_PER_HAND, NUM_PLAYERS); 
-    
+            
+   private Hand computerHand;
+   private Hand playerHand;
 
    public static void main(String[] args) {
       
@@ -39,7 +41,10 @@ public class Assig5Part3 {
    public Assig5Part3() {
   
       this.highCardGame.deal();
-      this.highCardGame.getHand(PLAYER).sort();
+      this.computerHand = highCardGame.getHand(COMPUTER);
+      this.playerHand = highCardGame.getHand(PLAYER);
+      this.computerHand.sort();
+      this.playerHand.sort();
       
       this.myCardTable.setLocationRelativeTo(null);
       this.myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,9 +61,6 @@ public class Assig5Part3 {
    }
 
    private void updateGameTable() {
-      
-      Hand computerHand = this.highCardGame.getHand(COMPUTER);
-      Hand playerHand = this.highCardGame.getHand(PLAYER);
       
       // Update JLabels for Computer.
       myCardTable.pnlComputerHand.removeAll();
@@ -79,12 +81,15 @@ public class Assig5Part3 {
       myCardTable.pnlHumanHand.removeAll();
       
       for (int x = 0; x < playerHand.getNumCards(); x++) {
-         humanLabels[x] = new JButton(guicard.getIcon(playerHand.inspectCard(x)));
+         humanLabels[x] = new JButton(guicard.getIcon(
+            this.playerHand.inspectCard(x)));
          humanLabels[x].setActionCommand(String.valueOf(x));
          humanLabels[x].addActionListener( new CardListener() );
          myCardTable.pnlHumanHand.add(humanLabels[x]);
       }
       
+      myCardTable.pnlComputerHand.validate();
+      myCardTable.pnlComputerHand.repaint();
       myCardTable.pnlPlayArea.validate();
       myCardTable.pnlPlayArea.repaint();
       myCardTable.pnlHumanHand.validate();
@@ -94,22 +99,16 @@ public class Assig5Part3 {
    
    private class CardListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
-         Card cardPlayed = highCardGame.getHand(PLAYER).playCard(
+         Card cardPlayed = playerHand.playCard(
                Integer.valueOf(e.getActionCommand()));
          playerPlays(cardPlayed);         
       }
    }
    
-   private void buildPlayArea () {
-      
-    //  this.gametable.pnlPlayArea
-      
-      
-   }
    
    private void playerPlays(Card cardPlayed) {
       playedCardLabels[1] = new JLabel(guicard.getIcon(cardPlayed));
-      updateGameTable();
+      computerPlays(cardPlayed);      
    }
    
    private void decidePlayWinner(Card playerCard, Card computerCard) {
@@ -121,7 +120,30 @@ public class Assig5Part3 {
    }
    
    private void computerPlays(Card cardPlayerPlayed) {
-      
+      Card computerCard = computerPicksACard(cardPlayerPlayed);
+      playedCardLabels[0] = new JLabel(guicard.getIcon(computerCard));
+      updateGameTable();
    }
    
+   private Card computerPicksACard(Card cardPlayerPlayed) {
+      
+      Card cardToPlay = null;
+      if (cardPlayerPlayed.getValue() == 'A') {
+         // Card was an Ace, play the lowest card, 
+         // Which could be a joker
+            cardToPlay = this.computerHand.playCard(this.computerHand.getNumCards() - 1);
+      } else {
+         for ( int x = this.computerHand.getNumCards()-1; x >=0; x--) {
+            if (this.computerHand.inspectCard(x).compareTo(cardPlayerPlayed) == 1) {
+               cardToPlay = this.computerHand.playCard(x);
+               break;
+            }
+         }
+         if (cardToPlay == null) {
+            cardToPlay = this.computerHand.playCard(this.computerHand.getNumCards() - 1);
+         }
+      }
+      return cardToPlay;
+      
+   }
 }
