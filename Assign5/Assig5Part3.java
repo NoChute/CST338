@@ -1,12 +1,9 @@
-package assignment5;
+
 import java.util.Random;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-
-//import assignment2and1.Card;
-//import assignment2and1.Deck;
 
 
 public class Assig5Part3 {
@@ -63,9 +60,7 @@ public class Assig5Part3 {
       }
       
       // and two random cards in the play region (simulating a computer/hum ply)
-      //for (JLabel humanLabel : humanLabels) {
-      //   myCardTable.pnlHumanHand.add(humanLabel);
-      //}
+      
       for(x = 0; x < NUM_PLAYERS; x++) {
          playedCardLabels[x] = new JLabel(GUICard.getIcon(generateRandomCard()));
       }
@@ -76,16 +71,12 @@ public class Assig5Part3 {
       for (x = 0; x < NUM_PLAYERS; x++) {
          myCardTable.pnlPlayArea.add(playedCardLabels[x]);
       }
-      
-      
-      //myCardTable.pnlPlayArea.add(playedCardLabels[0]);
-      //myCardTable.pnlPlayArea.add(playedCardLabels[1]);
+    
       
       myCardTable.pnlPlayArea.add(playLabelText[0]);
       myCardTable.pnlPlayArea.add(playLabelText[1]);
       
       // show everything to the user
-      //myCardTable.pack();
       myCardTable.setVisible(true);
    }
 
