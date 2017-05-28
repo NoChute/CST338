@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -36,6 +37,7 @@ public class Assign5phase2 {
       for (int x = 0; x < humanLabels.length; x++) {
          humanLabels[x] = new JButton(guicard.getIcon(generateRandomCard()));
          humanLabels[x].setBorderPainted(false);
+         humanLabels[x].setBackground(Color.WHITE);
       }
       
       for (int x = 0; x < playedCardLabels.length; x++ ) {

@@ -1,8 +1,9 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-public class GUICard {
+class GUICard {
 
    private static final int SUITS = 4;
    private static final int VALUES = 14;
@@ -85,7 +86,7 @@ public class GUICard {
    }
    
    static public Icon getIcon(Card card) {
-      if(iconsLoaded && !card.getErrorFlag() ) {
+      if(iconsLoaded && card != null && !card.getErrorFlag() ) {
          return iconCards[valueAsInt(card)][suitAsInt(card)];
       } else {
          return null;

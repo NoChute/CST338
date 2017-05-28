@@ -1,6 +1,7 @@
+
 import java.util.*;
 
-public class Deck {
+class Deck {
    //Created by Jenn Engblom, et al
    public static final int MAX_PACKS = 6;
    public static final int CARDS_IN_A_PACK = 56;

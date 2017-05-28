@@ -1,5 +1,5 @@
-public class Card
-{
+
+class Card {
    //Created by Jason Lloyd
    public static enum Suit { DIAMONDS, HEARTS, SPADES, CLUBS };
    public static char[] valueRanks = {'X', '2', '3', '4', '5', '6', '7',

@@ -1,0 +1,3 @@
+Both players start with 7 cards.
+
+Human player goes first by selecting a card from their hand. Computer then plays a card. Highest card wins. Jokers beat Aces but lose to everything else. The winner collects both cards and puts in their winning pile. In the event of a tie, no one wins a card ( each player keeps their own card ). Whoever goes first alternates after each round. After all rounds have been played, the player with the most cards in their winning pile wins.

@@ -1,21 +1,20 @@
-
 import java.util.ArrayList;
 
-class Hand {
+public class HandOrig {
    //Created by Oscar Alba.
    public static final int MAX_CARDS = 50;
 
-   private Card[] myCards;
+   private ArrayList<Card> myCards = new ArrayList<Card>();
    private int numCards;
 
 
    public Hand() {
-      myCards = new Card[MAX_CARDS];
+      myCards = new ArrayList<Card>();
       numCards = 0;
    }
 
    public void resetHand() {
-      myCards = new Card[MAX_CARDS];
+      myCards = new ArrayList<Card>();
       numCards = 0;
    }
 
@@ -25,22 +24,19 @@ class Hand {
       if (numCards >= MAX_CARDS) {
          validCheck = false;
       } else {
-         myCards[numCards] = card;
+         myCards.add(card);
          numCards++;
          validCheck = true;
       }
       return validCheck;
    }
 
-   public Card playCard(int cardIndex) {
+   public Card playCard() {
       Card cardToPlay;
-      
-      if (this.numCards > 0 && cardIndex < this.numCards) {       
-         cardToPlay = myCards[cardIndex];
-         for (int x = cardIndex; x < numCards - 1; x++) {
-            myCards[x] = myCards[x+1];
-         }
-         numCards--;
+      if (myCards.size() > 0) {
+         cardToPlay = myCards.get(myCards.size()-1);
+         //System.out.println("Playing " + cardToPlay);
+         myCards.remove(cardToPlay);
       } else {
          cardToPlay = new Card('B', Card.Suit.SPADES);
       }
@@ -48,11 +44,12 @@ class Hand {
    }
 
    public String toString() {
-      String string = "[ ";
-      for (int c = 0; c < numCards; c++) {
-         string += myCards[c] + " ";
+      String string = "";
+      if (numCards == 0) {
+         string += " ";
+      } else {
+         string  += myCards;
       }
-      string += "]";
       return string;
    }
 
@@ -62,15 +59,16 @@ class Hand {
 
    public Card inspectCard(int k) {
       Card card;
-      if (k > this.numCards) {
+      if (k <= numCards) {
          card = new Card('B' , Card.Suit.SPADES);
       } else {
-         card = myCards[k];
+         card =  myCards.get(myCards.size()-1);
       }
       return card;
    } 
    
    public void sort() {
-      Card.arraySort(myCards, numCards);
+      System.out.println("Sort got called");
+      Card.arraySort(myCards.toArray(new Card[numCards]), numCards);
    }
 }

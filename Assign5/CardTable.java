@@ -1,8 +1,9 @@
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class CardTable extends JFrame {
+class CardTable extends JFrame {
    
    private int numCardsPerHand;
    private int numPlayers;
@@ -18,7 +19,7 @@ public class CardTable extends JFrame {
       setLayout(new GridLayout( numPlayers + 1, 1));         
       
       pnlComputerHand = new JPanel(new FlowLayout());
-      pnlPlayArea = new JPanel(new GridLayout(2, 2));
+      pnlPlayArea = new JPanel(new GridLayout(3, 2));
       pnlHumanHand = new JPanel(new FlowLayout());
 
       TitledBorder cmpBorder = BorderFactory.createTitledBorder(blackline,
