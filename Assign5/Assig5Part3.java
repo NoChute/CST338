@@ -62,14 +62,17 @@ public class Assig5Part3 {
       
       this.playedCardLabels[0] = new JLabel(guicard.getBackCardIcon());
       this.playedCardLabels[1] = new JLabel(guicard.getBackCardIcon());
-      this.playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
-      this.playLabelText[1] = new JLabel("You", JLabel.CENTER);
+
       
       updateGameTable();
       
-      JButton resetButton = new JButton("Reset Game");
-      resetButton.addActionListener(new ButtonListener());
-      this.pnlHumanHandBtm.add(resetButton);
+      JButton resetGame = new JButton("Reset Game");
+      resetGame.addActionListener(new ButtonListener());
+      this.pnlHumanHandBtm.add(resetGame);
+      
+      JButton newHandButton = new JButton("New Hand");
+      newHandButton.addActionListener(new ButtonListener());
+      this.pnlHumanHandBtm.add(newHandButton);
       
       this.myCardTable.pack();
       
@@ -86,6 +89,8 @@ public class Assig5Part3 {
       
       
       //Draw Play Area
+      this.playLabelText[0] = new JLabel("Computer: " + compWin, JLabel.CENTER);
+      this.playLabelText[1] = new JLabel("You: " + humWin, JLabel.CENTER);
       this.cmpPlayArea.removeAll();
       this.cmpPlayArea.add(playedCardLabels[0]);
       this.cmpPlayArea.add(playLabelText[0]);
@@ -136,6 +141,10 @@ public class Assig5Part3 {
    
    private class ButtonListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
+         if (e.getActionCommand() == "Reset Game") {
+            humWin =0;
+            compWin =0;
+         }
          resetgame();
       }
    }
