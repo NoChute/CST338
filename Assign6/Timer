@@ -1,0 +1,91 @@
+class Clock extends JFrame
+{
+private int counter = 0;
+private boolean runTimer = false; //used for run method
+private final int PAUSE = 100; //milliseconds
+private String start = "START";
+private String stop = "STOP";
+
+public Timer clockTimer;
+public JButton buttonStartStop;
+public JLabel timerText;
+
+// The default constructor for the GUI
+public Clock()
+{
+   // Set timer action to 1000 milliseconds
+   clockTimer = new Timer(1000, timerEvent);
+
+   timerText = new JLabel("" + formatToTime(counter));
+
+   startStopButton = new JButton(start);
+   startStopButton.addActionListener(buttonEvent);
+
+   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   setSize(150, 150);
+}
+
+// minutes:seconds will be result of formatting method
+public String formatTimer(long seconds)
+{
+   long s = seconds % 60;
+   long m = (seconds / 60) % 60;
+   return String.format("%01d:%02d", m, s);
+}
+
+private ActionListener timerEvent = new ActionListener()
+{
+   public void actionPerformed(ActionEvent e)
+   {
+      counter++;
+      timerText.setText("" + formatToTime(counter));
+   }
+};
+
+// Will create the Timer and run the method
+private ActionListener buttonEvent = new ActionListener()
+{
+   public void actionPerformed(ActionEvent e)
+   {
+      TimerClass timeThread = new TimerClass();
+      timeThread.start();
+   }
+};
+
+// Called by ActionListener to start, stop, and display time and buttons
+private class TimerClass extends Thread
+{
+   public void run()
+   {
+      if (runTimer)
+      {
+         startStopButton.setText(start);
+         clockTimer.stop();
+         runTimer = false;
+         timerText.setText("" + formatToTime(counter));
+      }
+      else if (!runTimer)
+      {
+         buttonStartStop.setText(stop);
+         clockTimer.start();
+         counter = 0;
+         runTimer = true;
+         timerText.setText("" + formatToTime(counter));
+      }
+      doNothing(PAUSE);
+   }
+
+   
+   public void doNothing(int milliseconds)
+   {
+      try
+      {
+         Thread.sleep(milliseconds);
+      } catch (InterruptedException e)
+      {
+         System.out.println("Unexpected interrupt");
+         System.exit(0);
+      }
+   }
+} //End TimerClass inner class
+}
