@@ -1,10 +1,20 @@
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+//import java.awt.event.ActionListener; // for addController()
+import java.awt.event.WindowAdapter; // for CloseListener()
+import java.awt.event.WindowEvent; // for CloseListener()
+import java.lang.Integer; // int from Model is passed as an Integer
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Observable; // for update();
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -15,6 +25,276 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+
+//Created by Jenn Engblom, Jason Lloyd, Oscar Alba & Kevin Hendershott.
+
+class RunMVC {
+   // Created by Joseph Mack, © 2011, JMack@wm7d.net, released under GPL v3 (or
+   // any later version).
+   // Modified by Kevin Hendershott, et al.
+
+   // The order of instantiating the objects below will be important for some
+   // pairs of commands. I haven't explored this in any detail, beyond that the
+   // order below works.
+
+   private int start_value = 10; // initialise model, which in turn initialises
+                                 // view
+
+   public RunMVC() {
+
+      // create Model and View
+      Model myModel = new Model();
+      View myView = new View();
+
+      // tell Model about View.
+      myModel.addObserver(myView);
+      /*
+       * init model after view is instantiated and can show the status of the
+       * model (I later decided that only the controller should talk to the
+       * model and moved initialisation to the controller (see below).)
+       */
+      // uncomment to directly initialise Model
+      // myModel.setValue(start_value);
+
+      // create Controller. tell it about Model and View, initialise model
+      Controller myController = new Controller();
+      myController.addModel(myModel);
+      myController.addView(myView);
+      myController.initModel(start_value);
+
+      // tell View about Controller
+      myView.addController(myController);
+      // and Model,
+      // this was only needed when the view inits the model
+      // myView.addModel(myModel);
+   }
+
+}
+
+class Model extends java.util.Observable {
+   // Created by Joseph Mack, © 2011, JMack@wm7d.net, released under GPL v3 (or
+   // any later version).
+   // Modified by Kevin Hendershott, et al.
+
+   // inspired by Joseph Bergin's MVC gui at
+   // http://csis.pace.edu/~bergin/mvc/mvcgui.html
+
+   // Model holds an int counter (that's all it is).
+   // Model is an Observable.
+   // Model doesn't know about View or Controller.
+
+   private int counter; // primitive, automatically initialized to 0
+
+   public Model() {
+
+      System.out.println("Model()");
+
+      /**
+       * Problem initialising both model and view:
+       * 
+       * On a car you set the speedometer (view) to 0 when the car (model) is
+       * stationary. In some circles, this is called calibrating the readout
+       * instrument. In this MVC example, you would need two separate pieces of
+       * initialisation code, in the model and in the view. If you changed the
+       * initialisation value in one you'd have to remember (or know) to change
+       * the initialisation value in the other. A recipe for disaster.
+       * 
+       * Alternately, when instantiating model, you could run
+       * 
+       * setValue(0);
+       * 
+       * as part of the constructor, sending a message to the view. This
+       * requires the view to be instantiated before the model, otherwise the
+       * message will be send to null (the unitialised value for view). This
+       * isn't a particularly onerous requirement, and is possibly a reasonable
+       * approach.
+       * 
+       * Alternately, have RunMVC tell the view to intialise the model. The
+       * requires the view to have a reference to the model. This seemed an
+       * unneccesary complication.
+       * 
+       * I decided instead in RunMVC, to instantiate model, view and controller,
+       * make all the connections, then since the Controller already has a
+       * reference to the model (which it uses to alter the status of the
+       * model), to initialise the model from the controller and have the model
+       * automatically update the view.
+       */
+
+   } // Model()
+
+   // uncomment this if View is using Model Pull to get the counter
+   // not needed if getting counter from notifyObservers()
+   // public int getValue(){return counter;}
+
+   // notifyObservers()
+   // model sends notification to view because of RunMVC:
+   // myModel.addObserver(myView)
+   // myView then runs update()
+   //
+   // model Push - send counter as part of the message
+   public void setValue(int value) {
+
+      this.counter = value;
+      System.out.println("Model init: counter = " + counter);
+      setChanged();
+      // model Push - send counter as part of the message
+      notifyObservers(counter);
+      // if using Model Pull, then can use notifyObservers()
+      // notifyObservers()
+
+   } // setValue()
+
+   public void incrementValue() {
+
+      ++counter;
+      System.out.println("Model     : counter = " + counter);
+      setChanged();
+      // model Push - send counter as part of the message
+      notifyObservers(counter);
+      // if using Model Pull, then can use notifyObservers()
+      // notifyObservers()
+
+   } // incrementValue()
+
+}
+
+class View implements java.util.Observer {
+   // Created by Joseph Mack, © 2011, JMack@wm7d.net, released under GPL v3 (or
+   // any later version).
+   // Modified by Kevin Hendershott, et al.
+
+   // inspired by Joseph Bergin's MVC gui at
+   // http://csis.pace.edu/~bergin/mvc/mvcgui.html
+
+   // View is an Observer
+
+   // attributes as must be visible within class
+   private TextField myTextField;
+   private Button button;
+
+   // private Model model; //Joe: Model is hardwired in,
+   // needed only if view initialises model (which we aren't doing)
+
+   View() {
+      System.out.println("View()");
+
+      // frame in constructor and not an attribute as doesn't need to be visible
+      // to whole class
+      Frame frame = new Frame("simple MVC");
+      frame.add("North", new Label("counter"));
+
+      myTextField = new TextField();
+      frame.add("Center", myTextField);
+
+      // panel in constructor and not an attribute as doesn't need to be visible
+      // to whole class
+      Panel panel = new Panel();
+      button = new Button("PressMe");
+      panel.add(button);
+      frame.add("South", panel);
+
+      frame.addWindowListener(new CloseListener());
+      frame.setSize(200, 100);
+      frame.setLocation(100, 100);
+      frame.setVisible(true);
+
+   } // View()
+
+   // Called from the Model
+   public void update(Observable obs, Object obj) {
+
+      // who called us and what did they send?
+      // System.out.println ("View : Observable is " + obs.getClass() + ",
+      // object passed is " + obj.getClass());
+
+      // model Pull
+      // ignore obj and ask model for value,
+      // to do this, the view has to know about the model (which I decided I
+      // didn't want to do)
+      // uncomment next line to do Model Pull
+      // myTextField.setText("" + model.getValue());
+
+      // model Push
+      // parse obj
+      myTextField.setText("" + ((Integer) obj).intValue()); // obj is an Object,
+                                                            // need to cast to
+                                                            // an Integer
+
+   } // update()
+
+   // to initialise TextField
+   public void setValue(int v) {
+      myTextField.setText("" + v);
+   } // setValue()
+
+   public void addController(ActionListener controller) {
+      System.out.println("View      : adding controller");
+      button.addActionListener(controller); // need instance of controller
+                                            // before can add it as a listener
+   } // addController()
+
+   // uncomment to allow controller to use view to initialize model
+   // public void addModel(Model m){
+   // System.out.println("View : adding model");
+   // this.model = m;
+   // } //addModel()
+
+   public static class CloseListener extends WindowAdapter {
+      public void windowClosing(WindowEvent e) {
+         e.getWindow().setVisible(false);
+         System.exit(0);
+      } // windowClosing()
+   } // CloseListener
+
+}
+
+class Controller implements java.awt.event.ActionListener {
+   // Created by Joseph Mack, © 2011, JMack@wm7d.net, released under GPL v3 (or
+   // any later version).
+   // Modified by Kevin Hendershott, et al.
+
+   // inspired by Joseph Bergin's MVC gui at
+   // http://csis.pace.edu/~bergin/mvc/mvcgui.html
+
+   // Controller is a Listener
+
+   // Joe: Controller has Model and View hardwired in
+   Model model;
+   View view;
+
+   Controller() {
+      System.out.println("Controller()");
+   } // Controller()
+
+   // invoked when a button is pressed
+   public void actionPerformed(java.awt.event.ActionEvent e) {
+      // uncomment to see what action happened at view
+      /*
+       * System.out.println ("Controller: The " + e.getActionCommand() +
+       * " button is clicked at " + new java.util.Date(e.getWhen()) +
+       * " with e.paramString " + e.paramString() );
+       */
+      System.out.println("Controller: acting on Model");
+      model.incrementValue();
+   } // actionPerformed()
+
+   // Joe I should be able to add any model/view with the correct API
+   // but here I can only add Model/View
+   public void addModel(Model m) {
+      System.out.println("Controller: adding model");
+      this.model = m;
+   } // addModel()
+
+   public void addView(View v) {
+      System.out.println("Controller: adding view");
+      this.view = v;
+   } // addView()
+
+   public void initModel(int x) {
+      model.setValue(x);
+   } // initModel()
+
+}
 
 public class Assign6Phase3 {
 
@@ -50,8 +330,9 @@ public class Assign6Phase3 {
    private Hand playerHand;
 
    public static void main(String[] args) {
-      Assign6Phase3 newgame = new Assign6Phase3();
-      newgame.myCardTable.setVisible(true);
+      RunMVC mainRunMVC = new RunMVC();
+      // Assign6Phase3 newgame = new Assign6Phase3();
+      // newgame.myCardTable.setVisible(true);
    }
 
    public Assign6Phase3() {
